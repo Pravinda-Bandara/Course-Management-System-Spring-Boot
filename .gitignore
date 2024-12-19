@@ -1,0 +1,97 @@
+### General ###
+README.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### Eclipse/STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+*.code-workspace
+*.log
+
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
+
+### Logs ###
+logs/
+*.log
+**/logs/
+**/*.log
+!src/main/resources/logs/
+
+### Maven ###
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+### Spring Boot ###
+*.spring-boot-devtools.properties
+.spring-boot-devtools.properties
+
+### Temporary files ###
+*.tmp
+*.temp
+*.swp
+*~
+
+### OS Specific ###
+.DS_Store
+Thumbs.db
+
+### Security ###
+*.key
+*.pem
+*.cert
+*.p12
+*.jks
+secrets.env
+.env
+.env.*
+
+### Additional IDE ###
+.idea/
+out/
+*.ipr
+*.iws
+*.iml
+
+### Gradle ###
+.gradle/
+build/
+
+### Node/NPM ###
+node_modules/
+npm-debug.log
+yarn-error.log
