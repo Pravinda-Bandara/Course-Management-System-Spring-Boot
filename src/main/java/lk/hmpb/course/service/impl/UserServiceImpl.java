@@ -40,27 +40,30 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(UserRegisterReqTo userRegisterReqTo) {
         userRegisterReqTo.setPassword(passwordEncoder.encode(userRegisterReqTo.getPassword()));
-        User user = transformer.fromUserTO(userRegisterReqTo);
-        return userRepository.save(user);
+        User user = transformer.toUserEntity(userRegisterReqTo);
+        User savedUser = userRepository.save(user);
+
+        if (savedUser.getId() == null) {
+            throw new IllegalStateException("User ID was not generated during save operation");
+        }
+        return savedUser;
     }
 
     @Override
     public User get(UserLoginReqTo userLoginReqTo) {
-        // Check if user exists by email
         Optional<User> userOptional = userRepository.findByEmail(userLoginReqTo.getEmail());
 
-        // If user does not exist, throw exception
         if (userOptional.isEmpty()) {
             throw new IllegalArgumentException("User not found with email: " + userLoginReqTo.getEmail()); // User not found
         }
 
-        // Check if the password matches
         User user = userOptional.get();
         if (!passwordEncoder.matches(userLoginReqTo.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("Invalid password"); // Invalid password
+            throw new IllegalArgumentException("Invalid password");
         }
-
-        // If everything is valid, return the user
-        return user; // Successful login
+        if (user.getId() == null) {
+            throw new IllegalStateException("User ID is null, which indicates a data integrity issue");
+        }
+        return user;
     }
 }
