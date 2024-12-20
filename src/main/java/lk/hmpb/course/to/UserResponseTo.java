@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserResponseTo {
 
-    @NotBlank(message = "ID cannot be blank")
-    private String _id; // Maps to the User's id
+    @NotNull(message = "ID cannot be Null")
+    private long _id; // Maps to the User's id
 
     @NotBlank(message = "Name cannot be blank")
     private String name;

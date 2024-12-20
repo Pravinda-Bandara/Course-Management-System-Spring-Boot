@@ -19,7 +19,7 @@ public class Transformer {
         return mapper.map(userRegisterReqTo, User.class);
     }
 
-    public UserRegisterReqTo toUserRegisterDTO(User user) {
+    public UserRegisterReqTo toUserRegisterTO(User user) {
         return mapper.map(user, UserRegisterReqTo.class);
     }
 
@@ -27,7 +27,9 @@ public class Transformer {
         return mapper.map(userResponseTo, User.class);
     }
 
-    public UserResponseTo toUserResponseDTO(User user) {
+    public UserResponseTo toUserResponseTO(User user) {
+        UserResponseTo response = mapper.map(user, UserResponseTo.class);
+        response.setToken(null);
         return mapper.map(user, UserResponseTo.class);
     }
 }
