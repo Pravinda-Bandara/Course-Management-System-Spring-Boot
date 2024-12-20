@@ -1,4 +1,5 @@
 package lk.hmpb.course.controller;
+import lk.hmpb.course.exception.AppException;
 import lk.hmpb.course.service.UserService;
 import lk.hmpb.course.to.UserLoginReqTo;
 import lk.hmpb.course.to.UserRegisterReqTo;
@@ -21,13 +22,25 @@ public class UserHttpController {
 
     @PostMapping("/register")
     public ResponseEntity<UserResponseTo> register(@RequestBody UserRegisterReqTo userRegisterReqTo) {
-        UserResponseTo response = userService.register(userRegisterReqTo);
-        return ResponseEntity.ok(response);
+        try {
+            UserResponseTo response = userService.register(userRegisterReqTo);
+            return ResponseEntity.ok(response);
+        } catch (AppException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new AppException(500, "An error occurred during registration", e);
+        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserResponseTo> login(@RequestBody UserLoginReqTo userLoginReqTo) {
-        UserResponseTo response = userService.login(userLoginReqTo);
-        return ResponseEntity.ok(response);
+        try {
+            UserResponseTo response = userService.login(userLoginReqTo);
+            return ResponseEntity.ok(response);
+        } catch (AppException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new AppException(500, "An error occurred during login", e);
+        }
     }
 }
