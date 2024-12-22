@@ -1,9 +1,12 @@
 package lk.hmpb.course.controller;
-import lk.hmpb.course.exception.AppException;
+
+import jakarta.validation.Valid;
 import lk.hmpb.course.service.UserService;
 import lk.hmpb.course.to.UserLoginReqTo;
 import lk.hmpb.course.to.UserRegisterReqTo;
 import lk.hmpb.course.to.UserResponseTo;
+import lk.hmpb.course.util.ApiResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,26 +24,36 @@ public class UserHttpController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseTo> register(@RequestBody UserRegisterReqTo userRegisterReqTo) {
+    public ResponseEntity<ApiResponse<UserResponseTo>> register(@Valid @RequestBody UserRegisterReqTo userRegisterReqTo) {
         try {
-            UserResponseTo response = userService.register(userRegisterReqTo);
-            return ResponseEntity.ok(response);
-        } catch (AppException e) {
-            throw e;
+            ApiResponse<UserResponseTo> response = userService.register(userRegisterReqTo);
+            if (response.isSuccess()) {
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
         } catch (Exception e) {
-            throw new AppException(500, "An error occurred during registration", e);
+            ApiResponse<UserResponseTo> errorResponse = new ApiResponse<>();
+            errorResponse.setSuccess(false);
+            errorResponse.setError("An error occurred during registration: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserResponseTo> login(@RequestBody UserLoginReqTo userLoginReqTo) {
+    public ResponseEntity<ApiResponse<UserResponseTo>> login(@Valid @RequestBody UserLoginReqTo userLoginReqTo) {
         try {
-            UserResponseTo response = userService.login(userLoginReqTo);
-            return ResponseEntity.ok(response);
-        } catch (AppException e) {
-            throw e;
+            ApiResponse<UserResponseTo> response = userService.login(userLoginReqTo);
+            if (response.isSuccess()) {
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
         } catch (Exception e) {
-            throw new AppException(500, "An error occurred during login", e);
+            ApiResponse<UserResponseTo> errorResponse = new ApiResponse<>();
+            errorResponse.setSuccess(false);
+            errorResponse.setError("An error occurred during login: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 }
