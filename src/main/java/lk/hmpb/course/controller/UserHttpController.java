@@ -8,13 +8,11 @@ import lk.hmpb.course.to.UserResponseTo;
 import lk.hmpb.course.util.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/users")
+@CrossOrigin
 public class UserHttpController {
 
     private final UserService userService;
@@ -23,7 +21,7 @@ public class UserHttpController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<ApiResponse<UserResponseTo>> register(@Valid @RequestBody UserRegisterReqTo userRegisterReqTo) {
         try {
             ApiResponse<UserResponseTo> response = userService.register(userRegisterReqTo);
@@ -40,7 +38,7 @@ public class UserHttpController {
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public ResponseEntity<ApiResponse<UserResponseTo>> login(@Valid @RequestBody UserLoginReqTo userLoginReqTo) {
         try {
             ApiResponse<UserResponseTo> response = userService.login(userLoginReqTo);
