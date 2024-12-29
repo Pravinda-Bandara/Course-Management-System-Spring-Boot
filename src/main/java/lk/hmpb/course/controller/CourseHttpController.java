@@ -3,6 +3,7 @@ package lk.hmpb.course.controller;
 import jakarta.validation.Valid;
 import lk.hmpb.course.entiry.Course;
 import lk.hmpb.course.service.CourseService;
+import lk.hmpb.course.to.CourseResTo;
 import lk.hmpb.course.util.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +23,14 @@ public class CourseHttpController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Course>>> getAllCourses() {
-        ApiResponse<List<Course>> response = courseService.getAllCourses();
+    public ResponseEntity<ApiResponse<List<CourseResTo>>> getAllCourses() {
+        ApiResponse<List<CourseResTo>> response = courseService.getAllCourses();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<Course>> getCourseById(@PathVariable Long id) {
-        ApiResponse<Course> response = courseService.getCourseById(id);
+    public ResponseEntity<ApiResponse<CourseResTo>> getCourseById(@PathVariable Long id) {
+        ApiResponse<CourseResTo> response = courseService.getCourseById(id);
         if (response.isSuccess()) {
             return ResponseEntity.ok(response);
         } else {
@@ -38,14 +39,14 @@ public class CourseHttpController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Course>> createCourse(@Valid @RequestBody Course course) {
-        ApiResponse<Course> response = courseService.createCourse(course);
+    public ResponseEntity<ApiResponse<CourseResTo>> createCourse(@Valid @RequestBody Course course) {
+        ApiResponse<CourseResTo> response = courseService.createCourse(course);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Course>> updateCourse(@PathVariable Long id, @Valid @RequestBody Course course) {
-        ApiResponse<Course> response = courseService.updateCourse(id, course);
+    public ResponseEntity<ApiResponse<CourseResTo>> updateCourse(@PathVariable Long id, @Valid @RequestBody Course course) {
+        ApiResponse<CourseResTo> response = courseService.updateCourse(id, course);
         if (response.isSuccess()) {
             return ResponseEntity.ok(response);
         } else {
