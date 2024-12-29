@@ -1,10 +1,9 @@
 package lk.hmpb.course.service.util;
 
 import lk.hmpb.course.entiry.Course;
+import lk.hmpb.course.entiry.Enrollment;
 import lk.hmpb.course.entiry.User;
-import lk.hmpb.course.to.CourseResTo;
-import lk.hmpb.course.to.UserRegisterReqTo;
-import lk.hmpb.course.to.UserResponseTo;
+import lk.hmpb.course.to.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +15,8 @@ public class Transformer {
     public Transformer(ModelMapper mapper) {
         this.mapper = mapper;
     }
-    //user
 
+    // User
     public User toUserEntity(UserRegisterReqTo userRegisterReqTo) {
         return mapper.map(userRegisterReqTo, User.class);
     }
@@ -33,11 +32,36 @@ public class Transformer {
     public UserResponseTo toUserResponseTO(User user) {
         UserResponseTo response = mapper.map(user, UserResponseTo.class);
         response.setToken(null);
-        return mapper.map(user, UserResponseTo.class);
+        return response;
     }
 
-    //course
+    // Course
     public CourseResTo toCourseResTo(Course course) {
         return mapper.map(course, CourseResTo.class);
+    }
+
+    // Course
+    public CourseEnrollmentStatusResTo toCourseEnrollmentStatusResTo(Course course, boolean enrolled) {
+        return new CourseEnrollmentStatusResTo(
+                course.getId().toString(),
+                course.getTitle(),
+                course.getDescription(),
+                course.getDuration(),
+                course.getInstructor(),
+                course.getInstructorNum(),
+                enrolled
+        );
+    }
+    // Enrollment
+    public EnrollmentResTo toEnrollmentResTo(Enrollment enrollment) {
+        EnrollmentResTo enrollmentResTo = mapper.map(enrollment, EnrollmentResTo.class);
+
+        // Ensure studentId, studentEmail, and courseName are populated correctly
+        enrollmentResTo.setStudentId(enrollment.getUser().getId());
+        enrollmentResTo.setStudentEmail(enrollment.getUser().getEmail());
+        enrollmentResTo.setCourseName(enrollment.getCourse().getTitle());
+
+        return enrollmentResTo;
+
     }
 }
