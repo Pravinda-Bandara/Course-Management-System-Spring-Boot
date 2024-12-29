@@ -1,5 +1,6 @@
 package lk.hmpb.course.entiry;
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -41,13 +43,13 @@ public class User {
     @NotNull(message = "Role is mandatory")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role = Role.STUDENT;
+    private Role role = Role.student;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Enrollment> enrollments;
+    private Set<Enrollment> enrollments = new HashSet<>();
 
     public enum Role {
-        STUDENT,
-        ADMIN
+        student,
+        admin
     }
 }
