@@ -2,6 +2,7 @@ package lk.hmpb.course.controller;
 
 import jakarta.validation.Valid;
 import lk.hmpb.course.service.UserService;
+import lk.hmpb.course.to.AllUserResponseTo;
 import lk.hmpb.course.to.UserLoginReqTo;
 import lk.hmpb.course.to.UserRegisterReqTo;
 import lk.hmpb.course.to.UserResponseTo;
@@ -9,6 +10,8 @@ import lk.hmpb.course.util.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -54,4 +57,21 @@ public class UserHttpController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+    @GetMapping("/")
+    public ResponseEntity<ApiResponse<List<AllUserResponseTo>>> getAllUsers(@RequestHeader("Authorization") String token) {
+        try {
+            ApiResponse<List<AllUserResponseTo>> response = userService.getAllUsers(token);
+            if (response.isSuccess()) {
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+            }
+        } catch (Exception e) {
+            ApiResponse<List<AllUserResponseTo>> errorResponse = new ApiResponse<>();
+            errorResponse.setSuccess(false);
+            errorResponse.setError("An error occurred: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ import lk.hmpb.course.entiry.User;
 import lk.hmpb.course.repository.UserRepository;
 import lk.hmpb.course.service.UserService;
 import lk.hmpb.course.service.util.Transformer;
+import lk.hmpb.course.to.AllUserResponseTo;
 import lk.hmpb.course.to.UserLoginReqTo;
 import lk.hmpb.course.to.UserRegisterReqTo;
 import lk.hmpb.course.to.UserResponseTo;
@@ -13,6 +14,7 @@ import lk.hmpb.course.util.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -106,6 +108,35 @@ public class UserServiceImpl implements UserService {
 
         response.setSuccess(true);
         response.setData(userResponse);
+        return response;
+    }
+    @Override
+    public ApiResponse<List<AllUserResponseTo>> getAllUsers(String token) {
+        ApiResponse<List<AllUserResponseTo>> response = new ApiResponse<>();
+
+        try {
+            String extToken = token.substring(7);
+            String role = jwtUtil.extractRole(extToken);
+            System.out.println(role);
+
+            if (!"admin".equalsIgnoreCase(role)) {
+                response.setSuccess(false);
+                response.setError("Access denied: Only admin users can access this resource");
+                return response;
+            }
+
+            List<User> users = userRepository.findAll();
+            List<AllUserResponseTo> userResponses = users.stream()
+                    .map(transformer::toAllUserResponseTO)
+                    .toList();
+
+            response.setSuccess(true);
+            response.setData(userResponses);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setError("Error occurred while retrieving users: " + e.getMessage());
+        }
+
         return response;
     }
 }

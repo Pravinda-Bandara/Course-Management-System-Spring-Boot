@@ -35,6 +35,10 @@ public class Transformer {
         return response;
     }
 
+    public AllUserResponseTo toAllUserResponseTO(User user)  {
+        return mapper.map(user, AllUserResponseTo.class);
+    }
+
     // Course
     public CourseResTo toCourseResTo(Course course) {
         return mapper.map(course, CourseResTo.class);
