@@ -12,7 +12,7 @@ import java.util.Date;
 public class JwtUtil {
 
     private final String secretKey = "G2aKmHh9s24jKla2bBh4JSkj12l0a1Fsonoando2aon2odnaosndononoaubdaobsdkbiuabsbdkabwubkdsbakjwudakskjbxkawduauhsndkuawbudabskbdakuwduabskdbwkubaksdkbwadbkawbdkudbibawdibasbdwibaixbciawbidbsiu"; // Securely stored hard-coded secret key
-    private final long expiration = 10 * 60 * 1000; // 10 minutes, in milliseconds
+    private final long expiration = 100 * 60 * 1000; // 10 minutes, in milliseconds
 
     public String generateToken(String username, String role) {
         return Jwts.builder()
