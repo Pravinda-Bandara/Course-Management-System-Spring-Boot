@@ -35,8 +35,17 @@ public class Transformer {
         return response;
     }
 
-    public AllUserResponseTo toAllUserResponseTO(User user)  {
-        return mapper.map(user, AllUserResponseTo.class);
+    public AllUserResponseTo toAllUserResponseTO(User user) {
+        AllUserResponseTo response = new AllUserResponseTo();
+
+        // Manually set values from User to AllUserResponseTo
+        response.set_id(user.getId());
+        response.setName(user.getName());
+        response.setEmail(user.getEmail());
+        response.setRole(user.getRole().name());
+        response.setNumber(user.getNumber());
+
+        return response;
     }
 
     // Course
