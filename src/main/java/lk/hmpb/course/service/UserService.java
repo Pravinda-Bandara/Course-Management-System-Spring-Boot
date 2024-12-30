@@ -16,4 +16,5 @@ public interface UserService {
     ApiResponse<UserResponseTo> register(UserRegisterReqTo userRegisterReqTo);
     ApiResponse<UserResponseTo>  login(UserLoginReqTo userLoginReqTo);
     ApiResponse<List<AllUserResponseTo>> getAllUsers(String token);
+    public ApiResponse<AllUserResponseTo> getUserById(Long id);
 }

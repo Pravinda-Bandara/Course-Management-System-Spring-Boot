@@ -73,5 +73,21 @@ public class UserHttpController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<AllUserResponseTo>> getUserById(@PathVariable("id") Long id) {
+        try {
+            ApiResponse<AllUserResponseTo> response = userService.getUserById(id);
+            if (response.isSuccess()) {
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+            }
+        } catch (Exception e) {
+            ApiResponse<AllUserResponseTo> errorResponse = new ApiResponse<>();
+            errorResponse.setSuccess(false);
+            errorResponse.setError("An error occurred: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
 
 }

@@ -139,4 +139,33 @@ public class UserServiceImpl implements UserService {
 
         return response;
     }
+
+
+    @Override
+    public ApiResponse<AllUserResponseTo> getUserById(Long id) {
+        ApiResponse<AllUserResponseTo> response = new ApiResponse<>();
+
+        try {
+            // Find the user by ID from the repository
+            User user = userRepository.findById(id).orElse(null);
+
+            if (user == null) {
+                response.setSuccess(false);
+                response.setError("User not found with ID: " + id);
+                return response;
+            }
+
+            // Convert the User entity to a response DTO (UserResponse)
+            AllUserResponseTo userResponse = transformer.toAllUserResponseTO(user);
+
+            response.setSuccess(true);
+            response.setData(userResponse);
+
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setError("Error occurred while retrieving the user: " + e.getMessage());
+        }
+
+        return response;
+    }
 }
