@@ -5,10 +5,7 @@ import lk.hmpb.course.entiry.User;
 import lk.hmpb.course.repository.UserRepository;
 import lk.hmpb.course.service.UserService;
 import lk.hmpb.course.service.util.Transformer;
-import lk.hmpb.course.to.AllUserResponseTo;
-import lk.hmpb.course.to.UserLoginReqTo;
-import lk.hmpb.course.to.UserRegisterReqTo;
-import lk.hmpb.course.to.UserResponseTo;
+import lk.hmpb.course.to.*;
 import lk.hmpb.course.util.ApiResponse;
 import lk.hmpb.course.util.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -164,6 +161,51 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             response.setSuccess(false);
             response.setError("Error occurred while retrieving the user: " + e.getMessage());
+        }
+
+        return response;
+    }
+
+
+    @Override
+    public ApiResponse<UserResponseTo> updateUser(Long id, UserUpdateReqTo userUpdateReqTo) {
+        ApiResponse<UserResponseTo> response = new ApiResponse<>();
+
+        try {
+            Optional<User> userOptional = userRepository.findById(id);
+
+            if (userOptional.isEmpty()) {
+                response.setSuccess(false);
+                response.setError("User not found with ID: " + id);
+                return response;
+            }
+
+            User user = userOptional.get();
+
+            // Update user fields
+            if (userUpdateReqTo.getName() != null) {
+                user.setName(userUpdateReqTo.getName());
+            }
+            if (userUpdateReqTo.getEmail() != null && !user.getEmail().equals(userUpdateReqTo.getEmail())) {
+                if (existsByEmail(userUpdateReqTo.getEmail())) {
+                    response.setSuccess(false);
+                    response.setError("Email is already in use");
+                    return response;
+                }
+                user.setEmail(userUpdateReqTo.getEmail());
+            }
+
+            // Save updated user
+            User updatedUser = userRepository.save(user);
+
+            UserResponseTo userResponse = transformer.toUserResponseTO(updatedUser);
+            userResponse.set_id(updatedUser.getId());
+
+            response.setSuccess(true);
+            response.setData(userResponse);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setError("Error occurred while updating user: " + e.getMessage());
         }
 
         return response;

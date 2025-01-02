@@ -2,10 +2,7 @@ package lk.hmpb.course.controller;
 
 import jakarta.validation.Valid;
 import lk.hmpb.course.service.UserService;
-import lk.hmpb.course.to.AllUserResponseTo;
-import lk.hmpb.course.to.UserLoginReqTo;
-import lk.hmpb.course.to.UserRegisterReqTo;
-import lk.hmpb.course.to.UserResponseTo;
+import lk.hmpb.course.to.*;
 import lk.hmpb.course.util.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,4 +87,18 @@ public class UserHttpController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<UserResponseTo>> updateUser(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody UserUpdateReqTo userUpdateReqTo) {
+        ApiResponse<UserResponseTo> response = userService.updateUser(id, userUpdateReqTo);
+
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        } else if ("User not found".equalsIgnoreCase(response.getError())) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
 }

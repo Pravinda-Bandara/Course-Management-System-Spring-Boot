@@ -28,7 +28,9 @@ public class Transformer {
     public User toUserEntity(UserResponseTo userResponseTo) {
         return mapper.map(userResponseTo, User.class);
     }
-
+    public User toUserEntity(UserUpdateReqTo userUpdateReqTo) {
+        return mapper.map(userUpdateReqTo, User.class);
+    }
     public UserResponseTo toUserResponseTO(User user) {
         UserResponseTo response = mapper.map(user, UserResponseTo.class);
         response.setToken(null);

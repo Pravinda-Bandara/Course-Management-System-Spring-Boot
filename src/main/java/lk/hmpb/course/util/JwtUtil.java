@@ -1,9 +1,6 @@
 package lk.hmpb.course.util;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -30,6 +27,8 @@ public class JwtUtil {
                     .setSigningKey(secretKey)
                     .build();
             return parser.parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            throw new JwtException("Token has expired", e); // Custom exception for expired tokens
         } catch (Exception e) {
             throw new RuntimeException("Error parsing JWT token: " + e.getMessage(), e);
         }

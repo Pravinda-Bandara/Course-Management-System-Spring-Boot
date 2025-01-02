@@ -37,8 +37,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                 Collections.singletonList(new SimpleGrantedAuthority(role)));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
-                // Handle token exception
-                throw new RuntimeException("Invalid JWT token: " + e.getMessage(), e);
+                // Send 401 response for invalid or expired tokens
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"Invalid or expired JWT token\"}");
+                return; // Stop further processing
             }
         }
 
