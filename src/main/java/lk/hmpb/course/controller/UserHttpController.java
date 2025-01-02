@@ -105,4 +105,22 @@ public class UserHttpController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<String>> deleteUser(@PathVariable("id") Long id) {
+        try {
+            ApiResponse<String> response = userService.deleteUser(id);
+            if (response.isSuccess()) {
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+        } catch (Exception e) {
+            ApiResponse<String> errorResponse = new ApiResponse<>();
+            errorResponse.setSuccess(false);
+            errorResponse.setError("An error occurred while deleting the user: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
 }

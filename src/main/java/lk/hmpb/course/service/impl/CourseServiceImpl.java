@@ -4,6 +4,7 @@ package lk.hmpb.course.service.impl;
 import jakarta.transaction.Transactional;
 import lk.hmpb.course.entiry.Course;
 import lk.hmpb.course.repository.CourseRepository;
+import lk.hmpb.course.repository.EnrollmentRepository;
 import lk.hmpb.course.service.CourseService;
 import lk.hmpb.course.service.util.Transformer;
 import lk.hmpb.course.to.ResTO.CourseResTo;
@@ -19,11 +20,13 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final Transformer transformer;
+    private final EnrollmentRepository enrollmentRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository , Transformer transformer) {
+    public CourseServiceImpl(CourseRepository courseRepository, Transformer transformer, EnrollmentRepository enrollmentRepository) {
 
         this.courseRepository = courseRepository;
         this.transformer = transformer;
+        this.enrollmentRepository = enrollmentRepository;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class CourseServiceImpl implements CourseService {
     public ApiResponse<CourseResTo> createCourse(Course course) {
         Course savedCourse = courseRepository.save(course);
         CourseResTo courseResTo = transformer.toCourseResTo(savedCourse);
-        return new ApiResponse<>(courseResTo,true,  null);
+        return new ApiResponse<>(courseResTo, true, null);
     }
 
     @Override
@@ -73,10 +76,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public ApiResponse<Void> deleteCourse(Long id) {
-        if (courseRepository.existsById(id)) {
-            courseRepository.deleteById(id);
-            return new ApiResponse<>(null,true,  "Course deleted successfully");
+
+        Optional<Course> optionalCourse = courseRepository.findById(id);
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            course.getEnrollments().clear();
+            courseRepository.delete(course);
+
+            return new ApiResponse<>(null, true, "Course deleted successfully");
         } else {
             return new ApiResponse<>(null, false, "Course not found");
         }

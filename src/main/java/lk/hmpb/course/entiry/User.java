@@ -9,7 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -46,7 +48,7 @@ public class User {
     private Role role = Role.student;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Enrollment> enrollments = new HashSet<>();
+    private List<Enrollment> enrollments = new ArrayList<>();
 
     public enum Role {
         student,

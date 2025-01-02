@@ -214,4 +214,33 @@ public class UserServiceImpl implements UserService {
 
         return response;
     }
+    @Override
+    @Transactional
+    public ApiResponse<String> deleteUser(Long id) {
+        ApiResponse<String> response = new ApiResponse<>();
+        try {
+            // Retrieve the user by ID
+            Optional<User> userOptional = userRepository.findById(id);
+            if (userOptional.isEmpty()) {
+                response.setSuccess(false);
+                response.setError("User not found with ID: " + id);
+                return response;
+            }
+
+            User user = userOptional.get();
+
+            // Clear enrollments associated with the user
+            user.getEnrollments().clear();
+
+            // Delete the user
+            userRepository.delete(user);
+
+            response.setSuccess(true);
+            response.setData("User successfully deleted");
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setError("Error occurred while deleting user: " + e.getMessage());
+        }
+        return response;
+    }
 }

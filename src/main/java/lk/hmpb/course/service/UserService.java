@@ -19,4 +19,5 @@ public interface UserService {
     ApiResponse<List<AllUserResponseTo>> getAllUsers(String token);
     public ApiResponse<AllUserResponseTo> getUserById(Long id);
     ApiResponse<UserResponseTo> updateUser(Long id, UserUpdateReqTo userUpdateReqTo);
+    ApiResponse<String> deleteUser(Long id);
 }
