@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
 
         if (!passwordEncoder.matches(userLoginReqTo.getPassword(), user.getPassword())) {
             response.setSuccess(false);
-            response.setError("Invalid Username or password");
+            response.setError("Invalid password");
             return response;
         }
 
