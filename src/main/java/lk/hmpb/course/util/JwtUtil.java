@@ -1,6 +1,7 @@
 package lk.hmpb.course.util;
 
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -8,9 +9,12 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String secretKey = "G2aKmHh9s24jKla2bBh4JSkj12l0a1Fsonoando2aon2odnaosndononoaubdaobsdkbiuabsbdkabwubkdsbakjwudakskjbxkawduauhsndkuawbudabskbdakuwduabskdbwkubaksdkbwadbkawbdkudbibawdibasbdwibaixbciawbidbsiu"; // Securely stored hard-coded secret key
+    @Value("${secret.key}")
+    private String secretKey;  // Injected from application.properties
+
     private final long expiration = 100 * 60 * 1000; // 10 minutes, in milliseconds
 
+    // Generate JWT token with username and role
     public String generateToken(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
@@ -21,6 +25,7 @@ public class JwtUtil {
                 .compact();
     }
 
+    // Extract claims from the token
     public Claims extractClaims(String token) {
         try {
             JwtParser parser = Jwts.parserBuilder()
@@ -34,6 +39,7 @@ public class JwtUtil {
         }
     }
 
+    // Extract role from the token
     public String extractRole(String token) {
         Claims claims = extractClaims(token);
         return claims != null ? claims.get("role", String.class) : null;
