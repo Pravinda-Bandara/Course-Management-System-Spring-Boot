@@ -1,7 +1,7 @@
 package lk.hmpb.course.service;
 
 import lk.hmpb.course.entiry.Course;
-import lk.hmpb.course.to.CourseResTo;
+import lk.hmpb.course.to.ResTO.CourseResTo;
 import lk.hmpb.course.util.ApiResponse;
 
 import java.util.List;

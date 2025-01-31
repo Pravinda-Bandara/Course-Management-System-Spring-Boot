@@ -6,7 +6,7 @@ import lk.hmpb.course.entiry.Course;
 import lk.hmpb.course.repository.CourseRepository;
 import lk.hmpb.course.service.CourseService;
 import lk.hmpb.course.service.util.Transformer;
-import lk.hmpb.course.to.CourseResTo;
+import lk.hmpb.course.to.ResTO.CourseResTo;
 import lk.hmpb.course.util.ApiResponse;
 import org.springframework.stereotype.Service;
 

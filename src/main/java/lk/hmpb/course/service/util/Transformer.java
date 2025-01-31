@@ -3,7 +3,9 @@ package lk.hmpb.course.service.util;
 import lk.hmpb.course.entiry.Course;
 import lk.hmpb.course.entiry.Enrollment;
 import lk.hmpb.course.entiry.User;
-import lk.hmpb.course.to.*;
+import lk.hmpb.course.to.ReqTO.UserRegisterReqTo;
+import lk.hmpb.course.to.ReqTO.UserUpdateReqTo;
+import lk.hmpb.course.to.ResTO.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

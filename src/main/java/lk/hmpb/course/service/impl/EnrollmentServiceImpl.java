@@ -9,10 +9,9 @@ import lk.hmpb.course.repository.EnrollmentRepository;
 import lk.hmpb.course.repository.UserRepository;
 import lk.hmpb.course.service.EnrollmentService;
 import lk.hmpb.course.service.util.Transformer;
-import lk.hmpb.course.to.CourseEnrollmentStatusResTo;
-import lk.hmpb.course.to.EnrollmentDTO;
-import lk.hmpb.course.to.EnrollmentResTo;
-import lk.hmpb.course.to.EnrollmentStatusResponse;
+import lk.hmpb.course.to.ResTO.CourseEnrollmentStatusResTo;
+import lk.hmpb.course.to.ResTO.EnrollmentResTo;
+import lk.hmpb.course.to.ResTO.EnrollmentStatusResponse;
 import lk.hmpb.course.util.ApiResponse;
 import org.springframework.stereotype.Service;
 

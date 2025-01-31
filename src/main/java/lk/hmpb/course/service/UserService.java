@@ -1,7 +1,11 @@
 package lk.hmpb.course.service;
 
 import lk.hmpb.course.entiry.User;
-import lk.hmpb.course.to.*;
+import lk.hmpb.course.to.ReqTO.UserLoginReqTo;
+import lk.hmpb.course.to.ReqTO.UserRegisterReqTo;
+import lk.hmpb.course.to.ReqTO.UserUpdateReqTo;
+import lk.hmpb.course.to.ResTO.AllUserResponseTo;
+import lk.hmpb.course.to.ResTO.UserResponseTo;
 import lk.hmpb.course.util.ApiResponse;
 
 import java.util.List;

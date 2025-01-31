@@ -5,7 +5,11 @@ import lk.hmpb.course.entiry.User;
 import lk.hmpb.course.repository.UserRepository;
 import lk.hmpb.course.service.UserService;
 import lk.hmpb.course.service.util.Transformer;
-import lk.hmpb.course.to.*;
+import lk.hmpb.course.to.ReqTO.UserLoginReqTo;
+import lk.hmpb.course.to.ReqTO.UserRegisterReqTo;
+import lk.hmpb.course.to.ReqTO.UserUpdateReqTo;
+import lk.hmpb.course.to.ResTO.AllUserResponseTo;
+import lk.hmpb.course.to.ResTO.UserResponseTo;
 import lk.hmpb.course.util.ApiResponse;
 import lk.hmpb.course.util.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -87,7 +91,7 @@ public class UserServiceImpl implements UserService {
 
         if (!passwordEncoder.matches(userLoginReqTo.getPassword(), user.getPassword())) {
             response.setSuccess(false);
-            response.setError("Invalid password");
+            response.setError("Invalid Username or password");
             return response;
         }
 

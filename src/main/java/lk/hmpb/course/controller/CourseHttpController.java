@@ -3,7 +3,7 @@ package lk.hmpb.course.controller;
 import jakarta.validation.Valid;
 import lk.hmpb.course.entiry.Course;
 import lk.hmpb.course.service.CourseService;
-import lk.hmpb.course.to.CourseResTo;
+import lk.hmpb.course.to.ResTO.CourseResTo;
 import lk.hmpb.course.util.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
