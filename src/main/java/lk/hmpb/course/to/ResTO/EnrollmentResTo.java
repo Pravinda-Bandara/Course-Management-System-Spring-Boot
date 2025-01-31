@@ -1,4 +1,4 @@
-package lk.hmpb.course.to;
+package lk.hmpb.course.to.ResTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

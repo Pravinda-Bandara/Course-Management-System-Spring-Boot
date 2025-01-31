@@ -2,10 +2,10 @@ package lk.hmpb.course.controller;
 
 
 import lk.hmpb.course.service.EnrollmentService;
-import lk.hmpb.course.to.CourseEnrollmentStatusResTo;
-import lk.hmpb.course.to.EnrollmentRequestTo;
-import lk.hmpb.course.to.EnrollmentResTo;
-import lk.hmpb.course.to.EnrollmentStatusResponse;
+import lk.hmpb.course.to.ResTO.CourseEnrollmentStatusResTo;
+import lk.hmpb.course.to.ReqTO.EnrollmentRequestTo;
+import lk.hmpb.course.to.ResTO.EnrollmentResTo;
+import lk.hmpb.course.to.ResTO.EnrollmentStatusResponse;
 import lk.hmpb.course.util.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 

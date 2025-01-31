@@ -1,4 +1,4 @@
-package lk.hmpb.course.to;
+package lk.hmpb.course.to.ResTO;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

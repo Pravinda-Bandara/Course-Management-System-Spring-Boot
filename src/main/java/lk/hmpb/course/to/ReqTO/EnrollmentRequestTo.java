@@ -1,4 +1,4 @@
-package lk.hmpb.course.to;
+package lk.hmpb.course.to.ReqTO;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

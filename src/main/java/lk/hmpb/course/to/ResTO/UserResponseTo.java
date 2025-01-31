@@ -1,4 +1,4 @@
-package lk.hmpb.course.to;
+package lk.hmpb.course.to.ResTO;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AllUserResponseTo {
+public class UserResponseTo {
 
     @NotNull(message = "ID cannot be Null")
     private long _id; // Maps to the User's id
@@ -28,4 +28,6 @@ public class AllUserResponseTo {
     @NotBlank(message = "Number cannot be blank")
     private String number;
 
+    @NotNull(message = "Token cannot be null")
+    private String token; // JWT or other token
 }

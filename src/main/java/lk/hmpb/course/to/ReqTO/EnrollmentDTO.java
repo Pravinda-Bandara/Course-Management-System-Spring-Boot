@@ -1,10 +1,8 @@
-package lk.hmpb.course.to;
+package lk.hmpb.course.to.ReqTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
